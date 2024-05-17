@@ -11,12 +11,13 @@ interface IHevm {
 
 contract ComptrollerEchidna {
 
-
+    uint256 public constant USER_TOKENS   = 1_000_000; // multiplied by token decimals
     IHevm hevm = IHevm(address(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D));
     address public constant ALICE = address(0x1000000000000000000000000000000000000000);
     address public constant BOB   = address(0x2000000000000000000000000000000000000000);
     Comptroller comptroller;
-    CErc20 ctoken;
+    CErc20 Ctoken;
+    MockERC20 Utoken;
     InterestRateModel irm;
     
 
@@ -25,7 +26,8 @@ contract ComptrollerEchidna {
         //Init contracts
         comptroller = new Comptroller();
         // irm = new InterestRateModel;
-        ctoken = new CErc20();
+        Ctoken = new CErc20();
+        Utoken.mint(address(ALICE), USER_TOKENS * (10 ** Utoken.decimals()));
     }
 
 }
